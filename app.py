@@ -5,7 +5,8 @@ from io import BytesIO
 import json
 
 # ---------------- CONFIG ----------------
-API_KEY = "YOUR_GEMINI_API_KEY"  # 🔑 Replace with your Gemini API key
+API_KEY = "YOUR_GEMINI_API_KEY"
+ # 🔑 Replace with your Gemini API key
 genai.configure(api_key=API_KEY)
 
 st.set_page_config(page_title="Smart Presentation Builder", layout="centered")
