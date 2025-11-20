@@ -1,3 +1,2 @@
 streamlit
 python-pptx
-scikit-learn
