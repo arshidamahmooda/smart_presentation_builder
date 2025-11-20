@@ -24,8 +24,10 @@ def generate_slides(topic, num_slides):
     Do not include extra text other than the pure JSON list.
     """
 
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    # … inside generate_slides …
+    model = genai.GenerativeModel("gemini-2.5-flash")
     response = model.generate_content(prompt)
+
 
     slides_json = response.text.strip()
     slides_json = slides_json.replace("```json", "").replace("```", "")
