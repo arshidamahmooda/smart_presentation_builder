@@ -16,18 +16,15 @@ def generate_presentation_green_theme(slides):
         slide = prs.slides.add_slide(prs.slide_layouts[1])
         slide.shapes.title.text = f"{icon} {slide_data['title']}"
 
-        body = slide.shapes.placeholders[1].text_frame
-        body.clear()
+        text_frame = slide.shapes.placeholders[1].text_frame
+        text_frame.clear()
 
-        for i, bullet in enumerate(slide_data["bullets"]):
-            if i == 0:
-                body.text = f"• {bullet}"
-            else:
-                p = body.add_paragraph()
-                p.text = f"• {bullet}"
-            p.font.size = Pt(22)
+        for bullet in slide_data["bullets"]:
+            p = text_frame.add_paragraph()
+            p.text = f"• {bullet}"
+            p.font.size = Pt(24)
 
-    ppt_data = BytesIO()
-    prs.save(ppt_data)
-    ppt_data.seek(0)
-    return ppt_data
+    ppt_stream = BytesIO()
+    prs.save(ppt_stream)
+    ppt_stream.seek(0)
+    return ppt_stream
