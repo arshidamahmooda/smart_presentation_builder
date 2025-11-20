@@ -3,29 +3,39 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "models"))
 
 import streamlit as st
-from text_summarizer import summarize_text
-from ppt_generator import generate_presentation
+from ppt_generator import generate_presentation_green_theme
+from text_summarizer import split_into_slides
 
-st.set_page_config(page_title="Smart Presentation Builder", page_icon="📊")
+st.set_page_config(page_title="Smart Presentation Builder", page_icon="💡")
 
-st.title("📊 Smart Presentation Builder (Offline - No API Needed)")
-st.write("Enter your topic/content — Download your PPT instantly 🚀")
+st.title("🧠 Smart AI Presentation Builder (Offline)")
+st.write("Paste content → Auto-generate a clean professional PPT! 💼")
 
-user_input = st.text_area("📝 Enter content for slides:", height=300)
-slide_count = st.slider("Select number of slides", 3, 12, 6)
+content = st.text_area("✍️ Enter content for slides:", height=350,
+                       placeholder="Paste your slide content here...")
 
-if st.button("Generate Presentation"):
-    if user_input.strip() == "":
-        st.warning("⚠️ Please enter some text!")
+slide_count = st.slider("📌 Number of slides", 3, 12, 6)
+
+if st.button("✨ Generate Presentation"):
+    if content.strip() == "":
+        st.error("⚠ Please enter presentation content!")
     else:
-        with st.spinner("✍️ Creating presentation…"):
-            bullet_points = summarize_text(user_input, slide_count)
-            ppt_file = generate_presentation(bullet_points)
+        with st.spinner("💡 Structuring slides..."):
+            slides = split_into_slides(content, slide_count)
 
-            st.success("🎉 Presentation Ready!")
-            st.download_button(
-                label="📥 Download PPT",
-                data=ppt_file,
-                file_name="ai_presentation.pptx",
-                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-            )
+        with st.spinner("🎨 Designing presentation with icons..."):
+            ppt = generate_presentation_green_theme(slides)
+
+        st.success("🎉 PPT Successfully Generated!")
+        st.download_button(
+            "📥 Download Presentation",
+            data=ppt,
+            file_name="Smart_AI_Presentation.pptx",
+            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        )
+
+        st.subheader("📌 Slide Preview")
+        for i, slide in enumerate(slides):
+            st.markdown(f"### Slide {i+1}: {slide['title']}")
+            for bullet in slide['bullets']:
+                st.write(f"- {bullet}")
