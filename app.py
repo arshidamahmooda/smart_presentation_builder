@@ -1,6 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "models"))
+
 import streamlit as st
-from models.text_summarizer import summarize_text
-from models.ppt_generator import generate_presentation
+from text_summarizer import summarize_text
+from ppt_generator import generate_presentation
 
 st.set_page_config(page_title="Smart Presentation Builder", page_icon="📊")
 
