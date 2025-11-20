@@ -5,7 +5,7 @@ from io import BytesIO
 import json
 
 # ---------------- CONFIG ----------------
-API_KEY = "YOUR_GEMINI_API_KEY"
+API_KEY = "AIzaSyAJjoVkoZ8mLwIX9gBLrDyKoHxbHsCj6A8"
  # 🔑 Replace with your Gemini API key
 genai.configure(api_key=API_KEY)
 
