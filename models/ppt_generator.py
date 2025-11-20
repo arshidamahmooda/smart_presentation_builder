@@ -1,20 +1,23 @@
 from pptx import Presentation
 from io import BytesIO
 
-def generate_presentation(points):
+def generate_presentation(bullets):
     prs = Presentation()
-    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    
+    slide = prs.slides.add_slide(prs.slide_layouts[0])
+    slide.shapes.title.text = "AI Generated Presentation"
 
-    title = slide.shapes.title
-    body = slide.placeholders[1]
+    for i, slide_bullets in enumerate(bullets):
+        slide = prs.slides.add_slide(prs.slide_layouts[1])
+        slide.shapes.title.text = f"Slide {i+1}"
+        text_frame = slide.shapes.placeholders[1].text_frame
+        text_frame.text = slide_bullets[0]
+        
+        for bullet in slide_bullets[1:]:
+            p = text_frame.add_paragraph()
+            p.text = bullet
 
-    title.text = "Auto-Generated Presentation"
-    body.text = ""
-
-    for p in points:
-        body.text += f"• {p}\n"
-
-    ppt_stream = BytesIO()
-    prs.save(ppt_stream)
-    ppt_stream.seek(0)
-    return ppt_stream
+    ppt_data = BytesIO()
+    prs.save(ppt_data)
+    ppt_data.seek(0)
+    return ppt_data
