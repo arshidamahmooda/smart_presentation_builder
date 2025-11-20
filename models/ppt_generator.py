@@ -10,7 +10,6 @@ def generate_presentation_green_theme(slides):
     # Title Slide
     title_slide = prs.slides.add_slide(prs.slide_layouts[0])
     title_slide.shapes.title.text = slides[0]["title"]
-    title_slide.shapes.title.text_frame.paragraphs[0].font.color.rgb = None
 
     # Content Slides
     for slide_data in slides:
