@@ -9,28 +9,23 @@ from ppt_generator import generate_presentation
 st.set_page_config(page_title="Smart Presentation Builder", page_icon="📊")
 
 st.title("📊 Smart Presentation Builder (Offline - No API Needed)")
+st.write("Enter your topic/content — Download your PPT instantly 🚀")
 
-st.write("📝 Paste your text below to generate a presentation automatically!")
-
-user_input = st.text_area("Enter your document text here", height=300)
+user_input = st.text_area("📝 Enter content for slides:", height=300)
+slide_count = st.slider("Select number of slides", 3, 12, 6)
 
 if st.button("Generate Presentation"):
-    if not user_input.strip():
+    if user_input.strip() == "":
         st.warning("⚠️ Please enter some text!")
     else:
-        with st.spinner("⏳ Summarizing text..."):
-            summary_points = summarize_text(user_input)
+        with st.spinner("✍️ Creating presentation…"):
+            bullet_points = summarize_text(user_input, slide_count)
+            ppt_file = generate_presentation(bullet_points)
 
-        st.success("✔️ Summary created!")
-
-        with st.spinner("🎨 Generating PPTX file..."):
-            ppt_file = generate_presentation(summary_points)
-
-        st.success("🎉 Presentation Ready!")
-
-        st.download_button(
-            label="⬇️ Download Presentation",
-            data=ppt_file,
-            file_name="presentation.pptx",
-            mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
-        )
+            st.success("🎉 Presentation Ready!")
+            st.download_button(
+                label="📥 Download PPT",
+                data=ppt_file,
+                file_name="ai_presentation.pptx",
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            )
